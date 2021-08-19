@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {Utils} from './Utils';
 import {default as momentHijri} from 'moment-hijri';
+import moment from 'moment';
 
 export default function Month(props) {
   const {
@@ -18,7 +19,10 @@ export default function Month(props) {
   } = props;
 
   const MONTHS = months || showHijri ? Utils.HIJRI_MONTHS : Utils.MONTHS; // English/Arabic Month Array
-  const monthName = MONTHS[month];
+  const hijriMonth = momentHijri(
+    moment({year: year, month: month, day: 19}),
+  ).format('iMM');
+  const monthName = MONTHS[showHijri ? parseInt(hijriMonth) - 1 : month];
 
   let monthOutOfRange;
   let monthIsBeforeMin = false;

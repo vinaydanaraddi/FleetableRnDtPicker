@@ -4,6 +4,7 @@ import {Platform, Text, TouchableOpacity, View} from 'react-native';
 import Controls from './Controls';
 import {Utils} from './Utils';
 import {default as momentHijri} from 'moment-hijri';
+import moment from 'moment';
 
 export default function HeaderControls(props) {
   const {
@@ -30,10 +31,19 @@ export default function HeaderControls(props) {
     headingLevel,
     monthYearHeaderWrapperStyle,
     headerWrapperStyle,
+    showHijri,
   } = props;
-  const MONTHS = months || Utils.MONTHS; // English Month Array
-  const monthName = MONTHS[currentMonth];
+  const MONTHS = months || showHijri ? Utils.HIJRI_MONTHS : Utils.MONTHS; // English Month Array
+  const hijriYear = Math.round((currentYear - 622) * 1.0312);
   const year = currentYear;
+  const hijriMonth = momentHijri(
+    moment({year: year, month: currentMonth, day: 19}),
+  ).format('iMM');
+  console.log(
+    '🚀 ~ file: HeaderControls.js ~ line 42 ~ HeaderControls ~ hijriMonth',
+    hijriMonth,
+  );
+  const monthName = MONTHS[showHijri ? parseInt(hijriMonth) - 1 : currentMonth];
 
   const disablePreviousMonth =
     restrictMonthNavigation &&
@@ -68,7 +78,7 @@ export default function HeaderControls(props) {
         </TouchableOpacity>
         <TouchableOpacity onPress={onPressYear}>
           <Text style={[styles.yearHeaderMainText, textStyle, yearTitleStyle]}>
-            {year}
+            {showHijri ? hijriYear : year}
           </Text>
         </TouchableOpacity>
       </View>
