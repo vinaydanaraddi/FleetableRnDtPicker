@@ -31,14 +31,14 @@ export default class MonthSelector extends Component {
     return (
       <View styles={styles.calendar}>
         <MonthsHeader
-          showHijri
+          showHijri={showHijri}
           styles={styles}
           textStyle={textStyle}
           title={title + currentYear}
           headingLevel={headingLevel}
         />
         <MonthsGridView
-          showHijri
+          showHij={showHijri}
           styles={styles}
           textStyle={textStyle}
           currentYear={currentYear}

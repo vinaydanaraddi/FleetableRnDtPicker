@@ -33,6 +33,7 @@ export default function Day(props) {
     minRangeDuration,
     maxRangeDuration,
     enableDateChange,
+    showHijri,
   } = props;
 
   const thisDay = moment({year, month, day, hour: 12});
@@ -257,7 +258,7 @@ export default function Day(props) {
                 selectedDisabledDatesTextStyle,
                 overrideOutOfRangeTextStyle,
               ]}>
-              {day}
+              {showHijri ? momentHijri(thisDay).format('iDD') : day}
             </Text>
           </View>
         </View>
@@ -276,7 +277,7 @@ export default function Day(props) {
                 custom.textStyle,
                 selectedDayTextStyle,
               ]}>
-              {day}
+              {showHijri ? momentHijri(thisDay).format('iDD') : day}
             </Text>
           </TouchableOpacity>
         </View>
@@ -301,8 +302,7 @@ export default function Day(props) {
               disabledDatesTextStyle,
               custom.textStyle,
             ]}>
-            {day}
-            {/* {momentHijri(thisDay).format('iDD')} */}
+            {showHijri ? momentHijri(thisDay).format('iDD') : day}
           </Text>
         </View>
       </View>

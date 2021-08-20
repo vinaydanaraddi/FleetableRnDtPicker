@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import PropTypes from 'prop-types';
 import Month from './Month';
 import {default as momentHijri} from 'moment-hijri';
+import {useEffect} from 'react';
 export default function MonthsGridView(props) {
   const {
     currentYear,
@@ -14,6 +15,7 @@ export default function MonthsGridView(props) {
     maxDate,
     showHijri,
   } = props;
+
   const _months = Array.from(Array(12).keys());
   const columnArray = [0, 1, 2];
   const rowArray = [0, 1, 2, 3];
@@ -23,7 +25,7 @@ export default function MonthsGridView(props) {
       const currentMonth = _months.shift();
       return (
         <Month
-          showHijri
+          showHijri={showHijri}
           key={currentMonth + index}
           currentMonth={currentMonth}
           currentYear={currentYear}

@@ -18,7 +18,8 @@ export default function Month(props) {
     showHijri,
   } = props;
 
-  const MONTHS = months || showHijri ? Utils.HIJRI_MONTHS : Utils.MONTHS; // English/Arabic Month Array
+  // const MONTHS = months || showHijri ? Utils.HIJRI_MONTHS : Utils.MONTHS; // English/Arabic Month Array
+  const MONTHS = showHijri ? Utils.HIJRI_MONTHS : Utils.MONTHS;
   const hijriMonth = momentHijri(
     moment({year: year, month: month, day: 19}),
   ).format('iMM');

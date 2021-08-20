@@ -57,6 +57,7 @@ export default class DaysGridView extends Component {
     };
 
     const monthSettings = this.initMonthSettings(props);
+
     this.state = {
       monthSettings,
       daysGrid: this.generateDaysGrid(monthSettings),
@@ -153,6 +154,7 @@ export default class DaysGridView extends Component {
       // month doesn't matter for stragglers as long as isn't set to current month
       component: (
         <Day
+          showHijri={this.props.showHijri}
           key={key}
           day={day}
           styles={this.props.styles}
@@ -166,13 +168,14 @@ export default class DaysGridView extends Component {
 
   // Create grid of days.
   generateDaysGrid = params => {
-    const {
+    let {
       numDaysInWeek,
       maxWeekRows,
       startIndex,
       numDaysInMonth,
       numDaysInPrevMonth,
     } = params;
+
     let daysGrid = [[]];
     let dayOfMonth = 1;
     let dayNextMonth = 1;
@@ -220,6 +223,7 @@ export default class DaysGridView extends Component {
         }
       }
     }
+
     return daysGrid;
   };
 

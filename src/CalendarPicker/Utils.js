@@ -39,10 +39,12 @@ export const Utils = {
   ],
   MAX_ROWS: 7,
   MAX_COLUMNS: 7,
+
   FIRST_DAY_OFFSETS: [0, -1, 5, 4, 3, 2, 1],
   getDaysInMonth: function (month, year) {
     const lastDayOfMonth = new Date(year, month + 1, 0);
-    return lastDayOfMonth.getDate();
+    const d = lastDayOfMonth.getDate();
+    return d;
   },
   isSameMonthAndYear: function (date, month, year) {
     if (date) {

@@ -477,7 +477,7 @@ export default class CalendarPicker extends Component {
   };
 
   renderMonth(props) {
-    return <DaysGridView {...props} />;
+    return <DaysGridView {...props} showHijri={this.props.showHijri} />;
   }
 
   render() {
@@ -527,7 +527,7 @@ export default class CalendarPicker extends Component {
       case 'months':
         content = (
           <MonthSelector
-            showHijri
+            showHijri={showHijri}
             styles={styles}
             textStyle={textStyle}
             title={selectMonthTitle}
@@ -543,7 +543,7 @@ export default class CalendarPicker extends Component {
       case 'years':
         content = (
           <YearSelector
-            showHijri
+            showHijri={showHijri}
             styles={styles}
             textStyle={textStyle}
             title={selectYearTitle}
@@ -568,7 +568,7 @@ export default class CalendarPicker extends Component {
         content = (
           <View styles={styles.calendar}>
             <HeaderControls
-              showHijri
+              showHijri={showHijri}
               styles={styles}
               currentMonth={currentMonth}
               currentYear={currentYear}
@@ -595,7 +595,7 @@ export default class CalendarPicker extends Component {
               headerWrapperStyle={headerWrapperStyle}
             />
             <Weekdays
-              showHijri
+              showHijri={showHijri}
               styles={styles}
               firstDay={startFromMonday ? 1 : firstDay}
               currentMonth={currentMonth}
