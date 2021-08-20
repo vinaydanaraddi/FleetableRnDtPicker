@@ -13,7 +13,7 @@ const momentHijri = require('moment-hijri');
 const FleetableCalendar = ({value, minDate, maxDate, isGregorian}) => {
   return (
     <View>
-      {/* <CalendarPicker showHijri={showHijri} initialDate={new Date()} /> */}
+      {/* <CalendarPicker showHijri={!isGregorian} initialDate={new Date()} /> */}
 
       {isGregorian ? (
         <DatePicker
