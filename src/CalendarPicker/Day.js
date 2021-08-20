@@ -260,15 +260,38 @@ export default function Day(props) {
               ]}>
               {showHijri ? momentHijri(thisDay).format('iDD') : day}
             </Text>
+            <Text
+              style={[
+                styles.dayLabel,
+                textStyle,
+                styles.disabledText,
+                disabledDatesTextStyle,
+                styles.selectedDisabledText,
+                selectedDisabledDatesTextStyle,
+                overrideOutOfRangeTextStyle,
+                {fontSize: 10},
+              ]}>
+              {showHijri ? day : momentHijri(thisDay).format('iDD')}
+            </Text>
           </View>
         </View>
       );
     } else {
       return (
-        <View style={[styles.dayWrapper, custom.containerStyle]}>
+        <View
+          style={[
+            styles.dayWrapper,
+            custom.containerStyle,
+            {width: 50, height: 50},
+          ]}>
           <TouchableOpacity
             disabled={!enableDateChange}
-            style={[custom.style, computedSelectedDayStyle, selectedDayStyle]}
+            style={[
+              custom.style,
+              computedSelectedDayStyle,
+              selectedDayStyle,
+              {width: 50, height: 50},
+            ]}
             onPress={() => onPressDay({year, month, day})}>
             <Text
               style={[
@@ -278,6 +301,16 @@ export default function Day(props) {
                 selectedDayTextStyle,
               ]}>
               {showHijri ? momentHijri(thisDay).format('iDD') : day}
+            </Text>
+            <Text
+              style={[
+                styles.dayLabel,
+                textStyle,
+                custom.textStyle,
+                selectedDayTextStyle,
+                {fontSize: 10},
+              ]}>
+              {showHijri ? day : momentHijri(thisDay).format('iDD')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -303,6 +336,16 @@ export default function Day(props) {
               custom.textStyle,
             ]}>
             {showHijri ? momentHijri(thisDay).format('iDD') : day}
+          </Text>
+          <Text
+            style={[
+              textStyle,
+              styles.disabledText,
+              disabledDatesTextStyle,
+              custom.textStyle,
+              {fontSize: 10},
+            ]}>
+            {showHijri ? day : momentHijri(thisDay).format('iDD')}
           </Text>
         </View>
       </View>

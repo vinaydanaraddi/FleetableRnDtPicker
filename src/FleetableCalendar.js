@@ -1,46 +1,48 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Button} from 'react-native';
 import CalendarPicker from './CalendarPicker/index';
 import HijriUtils from '@date-io/hijri';
+import DatePicker, {
+  getFormatedDate,
+} from './react-native-modern-datepicker/src/index';
 
 const momentGregorian = require('moment');
 const momentHijri = require('moment-hijri');
 
-const FleetableCalendar = ({value, minDate, maxDate}) => {
-  const [hijriDate, setHijriDate] = useState(undefined);
-  useEffect(() => {
-    const hijri = momentHijri(momentHijri().format('iYYYY-iMM-iDD'));
-
-    console.log(
-      '🚀 ~ file: FleetableCalendar.js ~ line 13 ~ useEffect ~ hijri',
-      hijri,
-    );
-    const date = hijri.toDate();
-    console.log(
-      '🚀 ~ file: FleetableCalendar.js ~ line 20 ~ useEffect ~ date',
-      date,
-    );
-
-    setHijriDate(hijri);
-  }, [value]);
-
-  const onDateChange = date => {
-    console.log(
-      '🚀 ~ file: FleetableCalendar.js ~ line 21 ~ onDateChange ~ date',
-      date,
-    );
-  };
-
+const FleetableCalendar = ({value, minDate, maxDate, isGregorian}) => {
   return (
     <View>
-      {hijriDate ? (
-        <CalendarPicker
-          showHijri
-          initialDate={new Date()}
-          onDateChange={onDateChange}
+      {/* <CalendarPicker showHijri={showHijri} initialDate={new Date()} /> */}
+
+      {isGregorian ? (
+        <DatePicker
+          options={{
+            backgroundColor: '#090C08',
+            textHeaderColor: '#FFA25B',
+            textDefaultColor: '#F6E7C1',
+            selectedTextColor: '#fff',
+            mainColor: '#F4722B',
+            textSecondaryColor: '#D6C7A1',
+            borderColor: 'rgba(122, 146, 165, 0.1)',
+          }}
+          selected={getFormatedDate(new Date(), 'YYYY-MM-DD')}
         />
-      ) : undefined}
+      ) : (
+        <DatePicker
+          options={{
+            backgroundColor: '#090C08',
+            textHeaderColor: '#FFA25B',
+            textDefaultColor: '#F6E7C1',
+            selectedTextColor: '#fff',
+            mainColor: '#F4722B',
+            textSecondaryColor: '#D6C7A1',
+            borderColor: 'rgba(122, 146, 165, 0.1)',
+          }}
+          selected={getFormatedDate(new Date(), 'iYYYY-iMM-iDD')}
+          isGregorian={false}
+        />
+      )}
     </View>
   );
 };
