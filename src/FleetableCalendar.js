@@ -3,9 +3,7 @@ import {useEffect, useState} from 'react';
 import {View, Button} from 'react-native';
 import CalendarPicker from './CalendarPicker/index';
 import HijriUtils from '@date-io/hijri';
-import DatePicker, {
-  getFormatedDate,
-} from './react-native-modern-datepicker/src/index';
+import DatePicker, {getFormatedDate} from './rn-modern-picker/index';
 
 const momentGregorian = require('moment');
 const momentHijri = require('moment-hijri');
