@@ -1,16 +1,17 @@
 import moment from 'moment';
-import React, {useState, useEffect} from 'react';
-import {View, Switch, Text, Modal, SafeAreaView, Button} from 'react-native';
+import React, {useState} from 'react';
+import {Button, Modal, SafeAreaView, Switch, Text, View} from 'react-native';
 import CalendarPicker from './CalendarPicker/index';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import {useRef} from 'react';
-
-const momentGregorian = require('moment');
-const momentHijri = require('moment-hijri');
-
-const FleetableCalendar = ({value = '10/10/2020', minDate, maxDate}) => {
+import FleetableTimePicker from './FleetableTimePicker';
+const FleetableCalendar = ({
+  value = '10/10/2020',
+  minDate,
+  maxDate,
+  onDateChange,
+}) => {
+  let datetime = moment(value);
   const [showDateTimePicker, setDateTimePicker] = useState(false);
-  const [isGregorian, setIsGregorian] = useState(true);
+  const [isHijri, setIsHijri] = useState(false);
 
   return (
     <View>
@@ -24,7 +25,10 @@ const FleetableCalendar = ({value = '10/10/2020', minDate, maxDate}) => {
               minDate={minDate}
               maxDate={maxDate}
               startFromMonday={true}
-              showHijri={!isGregorian}
+              showHijri={isHijri}
+              onDateChange={date => {
+                datetime = moment(date);
+              }}
               initialDate={value ? moment(value) : moment()}
               selectedStartDate={moment(value)}
             />
@@ -36,19 +40,23 @@ const FleetableCalendar = ({value = '10/10/2020', minDate, maxDate}) => {
                 marginLeft: 20,
                 marginTop: 10,
               }}>
-              <Switch onValueChange={setIsGregorian} value={isGregorian} />
+              <Switch onValueChange={setIsHijri} value={isHijri} />
               <Text style={{marginLeft: 5}}>Display Hijri Calendar</Text>
             </View>
+            <FleetableTimePicker />
             <Button
-              onPress={() => setDateTimePicker(!showDateTimePicker)}
-              title="Learn More"
+              onPress={() => {
+                onDateChange && onDateChange(datetime);
+                setDateTimePicker(!showDateTimePicker);
+              }}
+              title="Okay"
             />
           </View>
         </SafeAreaView>
       </Modal>
       <Button
+        title={datetime.format('DD/MM/YYYY')}
         onPress={() => setDateTimePicker(!showDateTimePicker)}
-        title="Learn More"
       />
     </View>
   );
