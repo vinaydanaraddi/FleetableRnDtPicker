@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {Calendar, SelectMonth, SelectTime} from './components';
 import {utils} from '../utils';
+import {useEffect} from 'react';
 
 const options = {
   backgroundColor: '#fff',
@@ -38,6 +39,7 @@ const CalendarContext = createContext();
 
 const useCalendar = () => {
   const contextValue = useContext(CalendarContext);
+
   return contextValue;
 };
 
@@ -57,8 +59,9 @@ const DatePicker = props => {
       timeOpen: props.mode === 'time',
     }),
   };
+
   const [minHeight, setMinHeight] = useState(300);
-  const style = styles(contextValue?.options);
+  const style = styles(contextValue.options);
 
   const renderBody = () => {
     switch (contextValue.mode) {

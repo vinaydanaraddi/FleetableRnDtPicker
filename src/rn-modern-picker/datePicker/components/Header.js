@@ -46,7 +46,7 @@ const Header = ({changeMonth}) => {
     const modificationNumber = type === 'NEXT' ? 1 : -1;
     const newDate = utils
       .getDate(mainState.activeDate)
-      .add(modificationNumber, isGregorian ? 'month' : 'iMonth');
+      .add(modificationNumber, isGregorian ? 'month' : '.iMonth');
     setMainState({
       type: 'set',
       activeDate: utils.getFormated(newDate),
@@ -110,7 +110,7 @@ const Header = ({changeMonth}) => {
                 })
               }>
               <Text style={style.headerText}>
-                {utils.getTime(mainState.activeDate)}
+                {utils.toPersianNumber(utils.getTime(mainState.activeDate))}
               </Text>
             </TouchableOpacity>
           )}
@@ -130,7 +130,7 @@ const Header = ({changeMonth}) => {
           </Text>
           {mode === 'datepicker' && (
             <Text style={style.headerText}>
-              {utils.getTime(mainState.activeDate)}
+              {utils.toPersianNumber(utils.getTime(mainState.activeDate))}
             </Text>
           )}
         </Animated.View>

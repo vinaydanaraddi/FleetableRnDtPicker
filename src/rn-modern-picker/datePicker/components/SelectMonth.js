@@ -35,9 +35,10 @@ const SelectMonth = () => {
   const openAnimation = useRef(new Animated.Value(0)).current;
   const currentMonth = Number(mainState.activeDate.split('/')[1]);
   const prevDisable =
-    maximumDate && utils.checkYearDisabled(Number(year), true);
+    maximumDate && utils.checkYearDisabled(Number(utils.toEnglish(year)), true);
   const nextDisable =
-    minimumDate && utils.checkYearDisabled(Number(year), false);
+    minimumDate &&
+    utils.checkYearDisabled(Number(utils.toEnglish(year)), false);
 
   useEffect(() => {
     mainState.monthOpen && setShow(true);
@@ -57,7 +58,7 @@ const SelectMonth = () => {
 
   const onSelectMonth = month => {
     if (show) {
-      let y = Number(year);
+      let y = Number(utils.toEnglish(year));
       const date = utils.getDate(utils.validYear(mainState.activeDate, y));
       const activeDate =
         month !== null
@@ -85,19 +86,19 @@ const SelectMonth = () => {
   }, [prevDisable, nextDisable]);
 
   const onChangeYear = text => {
-    if (Number(text)) {
-      setYear(text);
+    if (Number(utils.toEnglish(text))) {
+      setYear(utils.toPersianNumber(text));
     }
   };
 
   const onSelectYear = number => {
-    let y = Number(year) + number;
+    let y = Number(utils.toEnglish(year)) + number;
     if (y > selectorEndingYear) {
       y = selectorEndingYear;
     } else if (y < selectorStartingYear) {
       y = selectorStartingYear;
     }
-    setYear(y);
+    setYear(utils.toPersianNumber(y));
   };
 
   const containerStyle = [
@@ -135,7 +136,7 @@ const SelectMonth = () => {
           style={style.yearInput}
           keyboardType="numeric"
           maxLength={4}
-          value={year.toString()}
+          value={year}
           onBlur={() => onSelectYear(0)}
           underlineColorAndroid={'rgba(0,0,0,0)'}
           returnKeyType="done"

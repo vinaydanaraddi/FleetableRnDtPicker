@@ -15,18 +15,18 @@ const jalaaliConfigs = {
   ],
   dayNamesShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
   monthNames: [
-    'Muharram',
-    'Safar',
-    'Rabi I',
-    'Rabi II',
-    'Jumada I',
-    'Jumada II',
-    'Rajab',
-    'Shaaban',
-    'Ramadan',
-    'Shawwal',
-    'Dhu al-Qidah',
-    'Dhu al-Hijjah',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ],
   selectedFormat: 'iYYYY/iMM/iDD',
   dateFormat: 'iYYYY/iMM/iDD',
@@ -78,14 +78,19 @@ class utils {
       minimumDate,
       maximumDate,
       isGregorian,
-      reverse: false,
+      reverse: reverse === 'unset' ? !isGregorian : reverse,
     };
     this.config = isGregorian ? gregorianConfigs : jalaaliConfigs;
     this.config = {...this.config, ...configs};
+
     if (mode === 'time' || mode === 'datepicker') {
       this.config.selectedFormat =
         this.config.dateFormat + ' ' + this.config.timeFormat;
     }
+    console.log(
+      '🚀 ~ file: utils.js ~ line 85 ~ utils ~ constructor ~  this.config',
+      this.config,
+    );
   }
 
   get flexDirection() {
@@ -101,21 +106,42 @@ class utils {
   getFormated = (date, formatName = 'selectedFormat') =>
     date.format(this.config[formatName]);
 
-  getFormatedDate = (date = new Date(), format = 'YYYY/MM/DD') =>
-    moment(date).format(format);
+  getFormatedDate = (date = new Date(), format = 'YYYY/MM/DD') => {
+    const d = moment(date).format(format);
+    return d;
+  };
 
-  getTime = time => this.getDate(time).format(this.config.timeFormat);
+  getTime = time => {
+    const t = this.getDate(time).format(this.config.timeFormat);
+    console.log('🚀 ~ file: utils.js ~ line 109 ~ utils ~ t', t);
+    return t;
+  };
 
-  getToday = () => this.getFormated(m, 'dateFormat');
+  getToday = () => {
+    const t = this.getFormated(m, 'dateFormat');
+    console.log('🚀 ~ file: utils.js ~ line 117 ~ utils ~ t', t);
+    return t;
+  };
 
   getMonthName = month => this.config.monthNames[month];
+
+  toPersianNumber = value => {
+    const {isGregorian} = this.data;
+    return isGregorian
+      ? this.toEnglish(String(value))
+      : String(value).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+  };
+
+  toEnglish = value => {
+    return value.replace(/[\u0660-\u0669]/g, d => d.charCodeAt() - 1632);
+  };
 
   getDate = time => moment(time, this.config.selectedFormat);
 
   getMonthYearText = time => {
     const {isGregorian} = this.data;
     const date = this.getDate(time);
-    const year = isGregorian ? date.year() : date.iYear();
+    const year = this.toPersianNumber(isGregorian ? date.year() : date.iYear());
     const month = this.getMonthName(isGregorian ? date.month() : date.iMonth());
     return `${month} ${year}`;
   };
@@ -140,7 +166,7 @@ class utils {
     const date = this.getDate(time);
     return this.checkMonthDisabled(
       this.getFormated(
-        date.add(next ? -1 : 1, isGregorian ? 'month' : 'iMonth'),
+        date.add(next ? -1 : 1, isGregorian ? 'month' : '.iMonth'),
       ),
     );
   };
@@ -179,16 +205,25 @@ class utils {
 
   getMonthDays = time => {
     const {minimumDate, maximumDate, isGregorian} = this.data;
+    console.log(
+      '🚀 ~ file: utils.js ~ line 207 ~ utils ~ time',
+      time,
+      this.data,
+    );
+
     let date = this.getDate(time);
+    console.log('🚀 ~ file: utils.js ~ line 210 ~ utils ~ date', date);
     const currentMonthDays = isGregorian
       ? date.daysInMonth()
-      : moment.iDaysInMonth(date.iYear(), date.iMonth());
+      : m.iDaysInMonth(date.iYear, date.iMonth);
     console.log(
-      '🚀 ~ file: utils.js ~ line 184 ~ utils ~ currentMonthDays',
+      '🚀 ~ file: utils.js ~ line 210 ~ utils ~ currentMonthDays',
       currentMonthDays,
     );
     const firstDay = isGregorian ? date.date(1) : date.iDate(1);
-    const dayOfMonth = (firstDay.day() + 0) % 7;
+    const dayOfMonth = isGregorian
+      ? (firstDay.day() + 1) % 7
+      : (firstDay.day() + 0) % 7;
 
     return [
       ...new Array(dayOfMonth),
@@ -204,7 +239,7 @@ class utils {
 
         date = this.getDate(time);
         return {
-          dayString: n + 1,
+          dayString: this.toPersianNumber(n + 1),
           day: n + 1,
           date: this.getFormated(
             isGregorian ? date.date(n + 1) : date.iDate(n + 1),

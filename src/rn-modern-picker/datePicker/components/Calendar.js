@@ -6,7 +6,7 @@ import {useCalendar} from '../DatePicker';
 
 const Calendar = () => {
   const {options, state, utils, onSelectedChange} = useCalendar();
-  const [mainState] = state;
+  const [mainState, setMainState] = state;
   const style = styles(options);
   const [{shownAnimation}, changeMonthAnimation] = utils.useMonthAnimation(
     mainState.activeDate,
@@ -14,6 +14,10 @@ const Calendar = () => {
   );
 
   useEffect(() => {
+    console.log(
+      '🚀 ~ file: Calendar.js ~ line 18 ~ useEffect ~ mainState.selectedDate ',
+      mainState.selectedDate,
+    );
     mainState.selectedDate && onSelectedChange(mainState.selectedDate);
   }, [mainState.selectedDate, onSelectedChange]);
 

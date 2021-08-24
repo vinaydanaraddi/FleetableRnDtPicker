@@ -78,7 +78,7 @@ const TimeScroller = ({title, data, onChange}) => {
           style.listItem,
         ]}>
         <Text style={style.listItemText}>
-          {String(item).length === 1 ? '0' + item : item}
+          {utils.toPersianNumber(String(item).length === 1 ? '0' + item : item)}
         </Text>
       </Animated.View>
     );
