@@ -1,46 +1,55 @@
-import React from 'react';
-import {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import moment from 'moment';
+import React, {useState, useEffect} from 'react';
+import {View, Switch, Text, Modal, SafeAreaView, Button} from 'react-native';
 import CalendarPicker from './CalendarPicker/index';
-import HijriUtils from '@date-io/hijri';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {useRef} from 'react';
 
 const momentGregorian = require('moment');
 const momentHijri = require('moment-hijri');
 
-const FleetableCalendar = ({value, minDate, maxDate}) => {
-  const [hijriDate, setHijriDate] = useState(undefined);
-  useEffect(() => {
-    const hijri = momentHijri(momentHijri().format('iYYYY-iMM-iDD'));
-
-    console.log(
-      '🚀 ~ file: FleetableCalendar.js ~ line 13 ~ useEffect ~ hijri',
-      hijri,
-    );
-    const date = hijri.toDate();
-    console.log(
-      '🚀 ~ file: FleetableCalendar.js ~ line 20 ~ useEffect ~ date',
-      date,
-    );
-
-    setHijriDate(hijri);
-  }, [value]);
-
-  const onDateChange = date => {
-    console.log(
-      '🚀 ~ file: FleetableCalendar.js ~ line 21 ~ onDateChange ~ date',
-      date,
-    );
-  };
+const FleetableCalendar = ({value = '10/10/2020', minDate, maxDate}) => {
+  const [showDateTimePicker, setDateTimePicker] = useState(false);
+  const [isGregorian, setIsGregorian] = useState(true);
 
   return (
     <View>
-      {hijriDate ? (
-        <CalendarPicker
-          showHijri
-          initialDate={new Date()}
-          onDateChange={onDateChange}
-        />
-      ) : undefined}
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={showDateTimePicker}>
+        <SafeAreaView>
+          <View>
+            <CalendarPicker
+              minDate={minDate}
+              maxDate={maxDate}
+              startFromMonday={true}
+              showHijri={!isGregorian}
+              initialDate={value ? moment(value) : moment()}
+              selectedStartDate={moment(value)}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignContent: 'center',
+                alignItems: 'center',
+                marginLeft: 20,
+                marginTop: 10,
+              }}>
+              <Switch onValueChange={setIsGregorian} value={isGregorian} />
+              <Text style={{marginLeft: 5}}>Display Hijri Calendar</Text>
+            </View>
+            <Button
+              onPress={() => setDateTimePicker(!showDateTimePicker)}
+              title="Learn More"
+            />
+          </View>
+        </SafeAreaView>
+      </Modal>
+      <Button
+        onPress={() => setDateTimePicker(!showDateTimePicker)}
+        title="Learn More"
+      />
     </View>
   );
 };
