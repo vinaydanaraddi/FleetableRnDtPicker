@@ -16,7 +16,9 @@ const FleetableTimePicker = ({time = moment(), onTimeChanged}) => {
     const t = `${hour}:${min}`;
     const dateTime = moment(date + ' ' + t, 'DD/MM/YYYY HH:mm');
     setTime(dateTime);
-    onTimeChanged(dateTime);
+    if (onTimeChanged) {
+      onTimeChanged(dateTime);
+    }
   }, [hour, min, onTimeChanged]);
 
   const onHourChange = (itemValue, itemIndex) => {

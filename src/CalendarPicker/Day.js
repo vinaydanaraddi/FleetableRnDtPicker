@@ -278,12 +278,7 @@ export default function Day(props) {
       );
     } else {
       return (
-        <View
-          style={[
-            styles.dayWrapper,
-            custom.containerStyle,
-            {width: 50, height: 50},
-          ]}>
+        <View style={[styles.dayWrapper, custom.containerStyle]}>
           <TouchableOpacity
             disabled={!enableDateChange}
             style={[

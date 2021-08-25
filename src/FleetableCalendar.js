@@ -41,7 +41,9 @@ const FleetableCalendar = ({
                 marginTop: 10,
               }}>
               <Switch onValueChange={setIsHijri} value={isHijri} />
-              <Text style={{marginLeft: 5}}>Display Hijri Calendar</Text>
+              <Text style={{marginLeft: 5, color: '#000000'}}>
+                Display Hijri Calendar
+              </Text>
             </View>
             <FleetableTimePicker />
             <Button
