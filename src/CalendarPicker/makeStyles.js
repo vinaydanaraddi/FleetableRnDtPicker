@@ -4,8 +4,8 @@
  * Copyright 2016 Yahoo Inc.
  * Licensed under the terms of the MIT license. See LICENSE file in the project root for terms.
  */
-const DEFAULT_SELECTED_BACKGROUND_COLOR = '#5ce600';
-const DEFAULT_SELECTED_TEXT_COLOR = '#000000';
+const DEFAULT_SELECTED_BACKGROUND_COLOR = 'red';
+const DEFAULT_SELECTED_TEXT_COLOR = '#ffffff';
 const DEFAULT_TODAY_BACKGROUND_COLOR = '#CCCCCC';
 
 function getBorderRadiusByShape(scaler, dayShape) {
@@ -62,6 +62,7 @@ export function makeStyles(params) {
 
     selectedDayLabel: {
       color: SELECTED_TEXT_COLOR,
+      fontWeight: 'bold',
     },
 
     dayLabelsWrapper: {
@@ -98,11 +99,13 @@ export function makeStyles(params) {
 
     selectedDayBackground: {
       backgroundColor: SELECTED_BG_COLOR,
+      width: 38 * scaler,
+      height: 38 * scaler,
     },
 
     selectedToday: {
-      width: 30 * scaler,
-      height: 30 * scaler,
+      width: 38 * scaler,
+      height: 38 * scaler,
       backgroundColor: TODAY_BG_COLOR,
       borderRadius: getBorderRadiusByShape(scaler, dayShape),
       alignSelf: 'center',

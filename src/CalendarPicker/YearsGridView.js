@@ -14,6 +14,7 @@ export default function YearsGridView(props) {
     textStyle,
     minDate,
     maxDate,
+    showHijri,
   } = props;
   const guideArray = [0, 1, 2, 3, 4];
   let year = intialYear - 13; // center current year in grid
@@ -23,7 +24,7 @@ export default function YearsGridView(props) {
       year++;
       return (
         <Year
-          showHijri
+          showHijri={showHijri}
           key={year}
           year={year}
           currentMonth={currentMonth}

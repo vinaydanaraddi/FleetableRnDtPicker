@@ -1,130 +1,165 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import {WheelPicker} from 'react-native-wheel-picker-android';
 import moment from 'moment';
-import {useState} from 'react';
-import {useEffect} from 'react';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from './utils/Responsiveness';
 
-const FleetableTimePicker = ({time = moment(), onTimeChanged}) => {
-  const [timestate, setTime] = useState(time);
+const FleetableTimePicker = ({
+  hourIndex,
+  minuteIndex,
+  onTimeChanged,
+  hoursLabel,
+  minutesLabel,
+}) => {
+  const hoursList = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+  ];
+  const minutesList = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+    '36',
+    '37',
+    '38',
+    '39',
+    '40',
+    '41',
+    '42',
+    '43',
+    '44',
+    '45',
+    '46',
+    '47',
+    '48',
+    '49',
+    '50',
+    '51',
+    '52',
+    '53',
+    '54',
+    '55',
+    '56',
+    '57',
+    '58',
+    '59',
+  ];
 
-  const [hour, setHour] = useState(moment(timestate).format('HH'));
-  const [min, setMin] = useState(moment(timestate).format('mm'));
-
-  useEffect(() => {
-    const date = moment().format('DD/MM/YYYY');
-    const t = `${hour}:${min}`;
-    const dateTime = moment(date + ' ' + t, 'DD/MM/YYYY HH:mm');
-    setTime(dateTime);
-    onTimeChanged(dateTime);
-  }, [hour, min, onTimeChanged]);
-
-  const onHourChange = (itemValue, itemIndex) => {
-    setHour(itemValue);
-  };
-  const onMinChange = (itemValue, itemIndex) => {
-    setMin(itemValue);
-  };
   return (
-    <View style={{flexDirection: 'row'}}>
-      <Picker
-        onValueChange={onHourChange}
-        selectedValue={moment(timestate).format('HH')}
-        style={{width: '50%'}}>
-        <Picker.Item label="1" value="1" />
-        <Picker.Item label="2" value="2" />
-        <Picker.Item label="3" value="3" />
-        <Picker.Item label="4" value="4" />
-        <Picker.Item label="5" value="5" />
-        <Picker.Item label="6" value="6" />
-        <Picker.Item label="7" value="7" />
-        <Picker.Item label="8" value="8" />
-        <Picker.Item label="9" value="9" />
-        <Picker.Item label="10" value="10" />
-        <Picker.Item label="11" value="11" />
-        <Picker.Item label="12" value="12" />
-        <Picker.Item label="13" value="13" />
-        <Picker.Item label="14" value="14" />
-        <Picker.Item label="15" value="15" />
-        <Picker.Item label="16" value="16" />
-        <Picker.Item label="17" value="17" />
-        <Picker.Item label="18" value="18" />
-        <Picker.Item label="19" value="19" />
-        <Picker.Item label="20" value="20" />
-        <Picker.Item label="21" value="21" />
-        <Picker.Item label="22" value="22" />
-        <Picker.Item label="23" value="23" />
-        <Picker.Item label="24" value="24" />
-      </Picker>
-      <Picker
-        onValueChange={onMinChange}
-        selectedValue={moment(timestate).format('mm')}
-        style={{width: '50%'}}>
-        <Picker.Item label="1" value="1" />
-        <Picker.Item label="2" value="2" />
-        <Picker.Item label="3" value="3" />
-        <Picker.Item label="4" value="4" />
-        <Picker.Item label="5" value="5" />
-        <Picker.Item label="6" value="6" />
-        <Picker.Item label="7" value="7" />
-        <Picker.Item label="8" value="8" />
-        <Picker.Item label="9" value="9" />
-        <Picker.Item label="10" value="10" />
-        <Picker.Item label="11" value="11" />
-        <Picker.Item label="12" value="12" />
-        <Picker.Item label="13" value="13" />
-        <Picker.Item label="14" value="14" />
-        <Picker.Item label="15" value="15" />
-        <Picker.Item label="16" value="16" />
-        <Picker.Item label="17" value="17" />
-        <Picker.Item label="18" value="18" />
-        <Picker.Item label="19" value="19" />
-        <Picker.Item label="20" value="20" />
-        <Picker.Item label="21" value="21" />
-        <Picker.Item label="22" value="22" />
-        <Picker.Item label="23" value="23" />
-        <Picker.Item label="24" value="24" />
-        <Picker.Item label="25" value="25" />
-        <Picker.Item label="26" value="26" />
-        <Picker.Item label="27" value="27" />
-        <Picker.Item label="28" value="28" />
-        <Picker.Item label="29" value="29" />
-        <Picker.Item label="30" value="30" />
-        <Picker.Item label="31" value="31" />
-        <Picker.Item label="32" value="32" />
-        <Picker.Item label="33" value="33" />
-        <Picker.Item label="34" value="34" />
-        <Picker.Item label="35" value="35" />
-        <Picker.Item label="36" value="36" />
-        <Picker.Item label="37" value="37" />
-        <Picker.Item label="38" value="38" />
-        <Picker.Item label="39" value="39" />
-        <Picker.Item label="40" value="40" />
-        <Picker.Item label="41" value="41" />
-        <Picker.Item label="42" value="42" />
-        <Picker.Item label="43" value="43" />
-        <Picker.Item label="44" value="44" />
-        <Picker.Item label="45" value="45" />
-        <Picker.Item label="46" value="46" />
-        <Picker.Item label="47" value="47" />
-        <Picker.Item label="48" value="48" />
-        <Picker.Item label="49" value="49" />
-        <Picker.Item label="50" value="50" />
-        <Picker.Item label="51" value="51" />
-        <Picker.Item label="52" value="52" />
-        <Picker.Item label="53" value="53" />
-        <Picker.Item label="54" value="54" />
-        <Picker.Item label="55" value="55" />
-        <Picker.Item label="56" value="56" />
-        <Picker.Item label="57" value="57" />
-        <Picker.Item label="58" value="58" />
-        <Picker.Item label="59" value="59" />
-        <Picker.Item label="60" value="50" />
-      </Picker>
+    <View style={styles.timeSlotsContainer}>
+      <View style={styles.singleTimeSlotContainer}>
+        <Text style={styles.timeSlotLabel}>{hoursLabel}</Text>
+        <View style={styles.wheeler}>
+          <WheelPicker
+            selectedItem={hourIndex}
+            data={hoursList}
+            onItemSelected={index => {
+              onTimeChanged('HOUR', index);
+            }}
+            itemTextSize={20}
+          />
+        </View>
+      </View>
+      <View style={styles.singleTimeSlotContainer}>
+        <Text style={styles.timeSlotLabel}>{minutesLabel}</Text>
+        <View style={styles.wheeler}>
+          <WheelPicker
+            selectedItem={minuteIndex}
+            data={minutesList}
+            onItemSelected={index => {
+              onTimeChanged('MINUTE', index);
+            }}
+            itemTextSize={20}
+          />
+        </View>
+      </View>
     </View>
   );
 };
 
-export default FleetableTimePicker;
+const styles = StyleSheet.create({
+  timeSlotsContainer: {
+    borderRadius: hp('1%'),
+    backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  timeSlotLabel: {
+    fontSize: hp('2%'),
+    color: '#000000',
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+  },
+  singleTimeSlotContainer: {
+    marginHorizontal: wp('1%'),
+    alignSelf: 'center',
+  },
+  wheeler: {
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
-const styles = StyleSheet.create({});
+export default FleetableTimePicker;
