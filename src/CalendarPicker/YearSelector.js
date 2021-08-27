@@ -50,7 +50,7 @@ export default class YearSelector extends Component {
     return (
       <View styles={styles.calendar}>
         <YearsHeader
-          showHijri
+          showHijri={showHijri}
           styles={styles}
           textStyle={textStyle}
           title={title}
@@ -70,7 +70,7 @@ export default class YearSelector extends Component {
           onYearViewNext={this.handleOnYearViewNext}
         />
         <YearsGridView
-          showHijri
+          showHijri={showHijri}
           intialYear={this.state.initialYear}
           currentMonth={currentMonth}
           currentYear={currentYear}

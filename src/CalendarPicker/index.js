@@ -55,6 +55,7 @@ export default class CalendarPicker extends Component {
     selectYearTitle: 'Select Year',
     horizontal: true,
     selectedDayStyle: null,
+    selectedDayTextStyle: null,
     selectedRangeStartStyle: null,
     selectedRangeEndStyle: null,
     selectedRangeStyle: null,
